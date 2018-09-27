@@ -2,7 +2,7 @@
 
 ## Observações:
 
-### Atenção: No linux os instalar assim:
+### Atenção: No linux instalar assim:
 
 #apt-get install nodejs npm
 
