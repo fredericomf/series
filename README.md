@@ -30,7 +30,7 @@ npm install --save react-navigation
 
 #### Implementado o componente FormRow
 
-Esse componente será utilizado em todos os formulário como uma forma de centralizar estilos.
+Esse componente será utilizado em todos os formulários como uma forma de centralizar estilos.
 
 Esse componente comporta-se como um Container para outros componentes React Native.
 
