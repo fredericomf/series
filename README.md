@@ -12,7 +12,7 @@
 
 ## Configurando o projeto
 
-1- Criar a estrutura: 
+1- Criar a estrutura:
 
 create-react-native-app series
 
