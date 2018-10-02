@@ -12,10 +12,17 @@ const FormRow = props => {
      *  <COMPONENTE_CHILD_N>
      * </FormRow>
     */
-    const {children} = props; 
+    const {children, first, last} = props; 
 
     return (
-        <View style={styles.container}>
+        <View 
+        /**
+         * Estilos com array: Ele adiciona os estilos na ordem descrita (aceita operações)
+         */
+        style={[styles.container, 
+            first ? styles.first : null,
+            last ? styles.last : null
+        ]}>
             { children }
         </View>
     )
@@ -28,6 +35,12 @@ const styles = StyleSheet.create({
         marginBottom: 5,
         marginTop: 5,
         padding: 10,
+    },
+    first: {
+        marginTop: 10
+    },
+    last: {
+        marginBottom: 10
     }
 });
 
