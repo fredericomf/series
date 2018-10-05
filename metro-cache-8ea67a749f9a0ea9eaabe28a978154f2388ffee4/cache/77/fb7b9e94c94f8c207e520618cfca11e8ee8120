@@ -1,0 +1,49 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+    Object.defineProperty(exports, "__esModule", {
+        value: true
+    });
+    var _jsxFileName = "/home/frederico/Documents/UDEMY/REACT_NATIVE/series/src/components/FormRow.js";
+
+    var _react = _require(_dependencyMap[0], "react");
+
+    var _react2 = _interopRequireDefault(_react);
+
+    var _reactNative = _require(_dependencyMap[1], "react-native");
+
+    function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+    var FormRow = function FormRow(props) {
+        var children = props.children,
+            first = props.first,
+            last = props.last;
+        return _react2.default.createElement(
+            _reactNative.View,
+            {
+                style: [styles.container, first ? styles.first : null, last ? styles.last : null],
+                __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 18
+                }
+            },
+            children
+        );
+    };
+
+    var styles = _reactNative.StyleSheet.create({
+        container: {
+            elevation: 1,
+            backgroundColor: '#FFF',
+            marginBottom: 5,
+            marginTop: 5,
+            padding: 10
+        },
+        first: {
+            marginTop: 10
+        },
+        last: {
+            marginBottom: 10
+        }
+    });
+
+    exports.default = FormRow;
+});

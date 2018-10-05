@@ -1,5 +1,14 @@
 import React from 'react';
-import {StyleSheet, View, TextInput, Button} from 'react-native';
+import {
+    ActivityIndicator,
+    Alert,
+    Button,
+    Text,
+    TextInput,
+    StyleSheet,
+    View
+} from 'react-native';
+import firebase from 'firebase';
 
 import FormRow from '../components/FormRow';
 
@@ -10,8 +19,36 @@ export default class LoginPage extends React.Component{
 
         this.state = {
             email: "",
-            password: ""
+            password: "",
+            isLoading: false,
+            message: ''
         }
+    }
+
+    componentDidMount() {
+
+        // Initialize Firebase
+        const config = {
+            apiKey: "AIzaSyBSE2m345kJIRrwyd4rRVQPeRJpqT6LCe4",
+            authDomain: "series-cee87.firebaseapp.com",
+            databaseURL: "https://series-cee87.firebaseio.com",
+            projectId: "series-cee87",
+            storageBucket: "series-cee87.appspot.com",
+            messagingSenderId: "313355878337"
+        };
+        firebase.initializeApp(config);
+
+        // EXEMPLO DE USO:
+        // Ao chamar o signInWithEmailAndPassword é retornada uma PROMISSE
+        // firebase
+        //     .auth()
+        //     .signInWithEmailAndPassword('teste@mail.com', '123123')
+        //     .then( user => {
+        //         console.log('usuário autenticado', user);
+        //     })
+        //     .catch(error => {
+        //         console.log('usuário autenticado', error);
+        //     });
     }
 
     /*
@@ -43,7 +80,64 @@ export default class LoginPage extends React.Component{
     }
 
     tryLogin(){
-        console.log(this.state);
+
+        this.setState({isLoading : true, message: ''});
+        
+        const { email, password } = this.state;
+
+        firebase
+            .auth()
+            .signInWithEmailAndPassword( email, password )
+            .then( user => {
+                this.setState({ message: 'Sucesso!' });
+                console.log('usuário autenticado', user);
+            })
+            .catch(error => {
+                this.setState({ 
+                    message: this.getErrorMessageByCode( error.code )
+                });
+                // console.log('falha ao autenticar', error);
+            })
+            .then( () => this.setState({ isLoading: false }) ); // Mesmo que dê o catch ele vai cair aqui depois
+    }
+
+    getErrorMessageByCode( code ) {
+
+        switch(code){
+            case 'auth/wrong-password':
+                return 'Senha incorreta';
+            case 'auth/user-not-found':
+                return 'Usuário não encontrado';
+            default:
+                return 'Erro desconhecido';
+        }
+    }
+
+    renderButton() {
+
+        if(this.state.isLoading)
+            return <ActivityIndicator />;
+
+        return (
+            <Button 
+            title="Entrar" 
+            onPress={ () => this.tryLogin() }
+            />
+        );
+    }
+
+    renderMessage() {
+
+        const { message } = this.state;
+
+        if( !message ) 
+            return null;
+        
+        return (
+            <View>
+                <Text>{message}</Text>
+            </View>
+        );
     }
 
     render() {
@@ -71,10 +165,8 @@ export default class LoginPage extends React.Component{
                     onChangeText={ value => this.onChangeHandler( 'password', value ) }
                     />
                 </FormRow>
-                <Button 
-                    title="Entrar" 
-                    onPress={ () => this.tryLogin() }
-                    />
+                { this.renderButton() }
+                { this.renderMessage() }
             </View>
         );
     }

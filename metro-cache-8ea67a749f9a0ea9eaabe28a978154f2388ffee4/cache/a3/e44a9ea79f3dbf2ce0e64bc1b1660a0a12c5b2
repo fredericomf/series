@@ -1,0 +1,259 @@
+__d(function (global, _require, module, exports, _dependencyMap) {
+    Object.defineProperty(exports, "__esModule", {
+        value: true
+    });
+
+    var _react2 = _require(_dependencyMap[0], "react");
+
+    var _react3 = _interopRequireDefault(_react2);
+
+    var _index = _require(_dependencyMap[1], "./../../node_modules/react-transform-hmr/lib/index.js");
+
+    var _index2 = _interopRequireDefault(_index);
+
+    var _jsxFileName = "/home/frederico/Documents/UDEMY/REACT_NATIVE/series/src/pages/LoginPage.js";
+
+    var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+    var _reactNative = _require(_dependencyMap[2], "react-native");
+
+    var _firebase = _require(_dependencyMap[3], "firebase");
+
+    var _firebase2 = _interopRequireDefault(_firebase);
+
+    var _FormRow = _require(_dependencyMap[4], "../components/FormRow");
+
+    var _FormRow2 = _interopRequireDefault(_FormRow);
+
+    function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+    function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+    function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+    function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+    function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+    var _components = {
+        LoginPage: {
+            displayName: "LoginPage"
+        }
+    };
+
+    var _node_modulesReactTransformHmrLibIndexJs2 = (0, _index2.default)({
+        filename: "/home/frederico/Documents/UDEMY/REACT_NATIVE/series/src/pages/LoginPage.js",
+        components: _components,
+        locals: [module],
+        imports: [_react3.default]
+    });
+
+    function _wrapComponent(id) {
+        return function (Component) {
+            return _node_modulesReactTransformHmrLibIndexJs2(Component, id);
+        };
+    }
+
+    var LoginPage = _wrapComponent("LoginPage")(function (_React$Component) {
+        _inherits(LoginPage, _React$Component);
+
+        function LoginPage(props) {
+            _classCallCheck(this, LoginPage);
+
+            var _this = _possibleConstructorReturn(this, (LoginPage.__proto__ || Object.getPrototypeOf(LoginPage)).call(this, props));
+
+            _this.state = {
+                email: "",
+                password: "",
+                isLoading: false,
+                message: ''
+            };
+            return _this;
+        }
+
+        _createClass(LoginPage, [{
+            key: "componentDidMount",
+            value: function componentDidMount() {
+                var config = {
+                    apiKey: "AIzaSyBSE2m345kJIRrwyd4rRVQPeRJpqT6LCe4",
+                    authDomain: "series-cee87.firebaseapp.com",
+                    databaseURL: "https://series-cee87.firebaseio.com",
+                    projectId: "series-cee87",
+                    storageBucket: "series-cee87.appspot.com",
+                    messagingSenderId: "313355878337"
+                };
+
+                _firebase2.default.initializeApp(config);
+            }
+        }, {
+            key: "onChangeHandler",
+            value: function onChangeHandler(field, value) {
+                this.setState(_defineProperty({}, field, value));
+            }
+        }, {
+            key: "tryLogin",
+            value: function tryLogin() {
+                var _this2 = this;
+
+                this.setState({
+                    isLoading: true,
+                    message: ''
+                });
+                var _state = this.state,
+                    email = _state.email,
+                    password = _state.password;
+
+                _firebase2.default.auth().signInWithEmailAndPassword(email, password).then(function (user) {
+                    _this2.setState({
+                        message: 'Sucesso!'
+                    });
+
+                    console.log('usuário autenticado', user);
+                }).catch(function (error) {
+                    _this2.setState({
+                        message: _this2.getErrorMessageByCode(error.code)
+                    });
+                }).then(function () {
+                    return _this2.setState({
+                        isLoading: false
+                    });
+                });
+            }
+        }, {
+            key: "getErrorMessageByCode",
+            value: function getErrorMessageByCode(code) {
+                switch (code) {
+                    case 'auth/wrong-password':
+                        return 'Senha incorreta';
+
+                    case 'auth/user-not-found':
+                        return 'Usuário não encontrado';
+
+                    default:
+                        return 'Erro desconhecido';
+                }
+            }
+        }, {
+            key: "renderButton",
+            value: function renderButton() {
+                var _this3 = this;
+
+                if (this.state.isLoading) return _react3.default.createElement(_reactNative.ActivityIndicator, {
+                    __source: {
+                        fileName: _jsxFileName,
+                        lineNumber: 118
+                    }
+                });
+                return _react3.default.createElement(_reactNative.Button, {
+                    title: "Entrar",
+                    onPress: function onPress() {
+                        return _this3.tryLogin();
+                    },
+                    __source: {
+                        fileName: _jsxFileName,
+                        lineNumber: 121
+                    }
+                });
+            }
+        }, {
+            key: "renderMessage",
+            value: function renderMessage() {
+                var message = this.state.message;
+                if (!message) return null;
+                return _react3.default.createElement(
+                    _reactNative.View,
+                    {
+                        __source: {
+                            fileName: _jsxFileName,
+                            lineNumber: 136
+                        }
+                    },
+                    _react3.default.createElement(
+                        _reactNative.Text,
+                        {
+                            __source: {
+                                fileName: _jsxFileName,
+                                lineNumber: 137
+                            }
+                        },
+                        message
+                    )
+                );
+            }
+        }, {
+            key: "render",
+            value: function render() {
+                var _this4 = this;
+
+                return _react3.default.createElement(
+                    _reactNative.View,
+                    {
+                        __source: {
+                            fileName: _jsxFileName,
+                            lineNumber: 144
+                        }
+                    },
+                    _react3.default.createElement(
+                        _FormRow2.default,
+                        {
+                            first: true,
+                            __source: {
+                                fileName: _jsxFileName,
+                                lineNumber: 145
+                            }
+                        },
+                        _react3.default.createElement(_reactNative.TextInput, {
+                            placeholder: "user@mail.com",
+                            style: styles.input,
+                            value: this.state.email,
+                            onChangeText: function onChangeText(value) {
+                                return _this4.onChangeHandler('email', value);
+                            },
+                            __source: {
+                                fileName: _jsxFileName,
+                                lineNumber: 149
+                            }
+                        })
+                    ),
+                    _react3.default.createElement(
+                        _FormRow2.default,
+                        {
+                            last: true,
+                            __source: {
+                                fileName: _jsxFileName,
+                                lineNumber: 158
+                            }
+                        },
+                        _react3.default.createElement(_reactNative.TextInput, {
+                            placeholder: "******",
+                            secureTextEntry: true,
+                            style: styles.input,
+                            value: this.state.password,
+                            onChangeText: function onChangeText(value) {
+                                return _this4.onChangeHandler('password', value);
+                            },
+                            __source: {
+                                fileName: _jsxFileName,
+                                lineNumber: 159
+                            }
+                        })
+                    ),
+                    this.renderButton(),
+                    this.renderMessage()
+                );
+            }
+        }]);
+
+        return LoginPage;
+    }(_react3.default.Component));
+
+    exports.default = LoginPage;
+
+    var styles = _reactNative.StyleSheet.create({
+        input: {
+            paddingBottom: 5,
+            paddingLeft: 5,
+            paddingRight: 5
+        }
+    });
+});
