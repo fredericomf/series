@@ -103,16 +103,35 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                     email = _state.email,
                     password = _state.password;
 
-                _firebase2.default.auth().signInWithEmailAndPassword(email, password).then(function (user) {
+                var loginUserSuccess = function loginUserSuccess(user) {
                     _this2.setState({
                         message: 'Sucesso!'
                     });
+                };
 
-                    console.log('usuário autenticado', user);
-                }).catch(function (error) {
+                var loginUserFailed = function loginUserFailed(error) {
                     _this2.setState({
                         message: _this2.getErrorMessageByCode(error.code)
                     });
+                };
+
+                _firebase2.default.auth().signInWithEmailAndPassword(email.toLowerCase().trim(), password).then(loginUserSuccess).catch(function (error) {
+                    if (error.code === 'auth/user-not-found') {
+                        _reactNative.Alert.alert('Usuário não encontrado', 'Deseja criar um cadastro com as informações inseridas?', [{
+                            text: 'Não',
+                            onPress: function onPress() {},
+                            style: 'cancel'
+                        }, {
+                            text: 'Sim',
+                            onPress: function onPress() {
+                                _firebase2.default.auth().createUserWithEmailAndPassword(email.toLowerCase().trim(), password).then(loginUserSuccess).catch(loginUserFailed);
+                            }
+                        }], {
+                            cancelable: false
+                        });
+                    } else {
+                        loginUserFailed(error);
+                    }
                 }).then(function () {
                     return _this2.setState({
                         isLoading: false
@@ -141,7 +160,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                 if (this.state.isLoading) return _react3.default.createElement(_reactNative.ActivityIndicator, {
                     __source: {
                         fileName: _jsxFileName,
-                        lineNumber: 118
+                        lineNumber: 152
                     }
                 });
                 return _react3.default.createElement(_reactNative.Button, {
@@ -151,7 +170,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                     },
                     __source: {
                         fileName: _jsxFileName,
-                        lineNumber: 121
+                        lineNumber: 155
                     }
                 });
             }
@@ -165,7 +184,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                     {
                         __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 136
+                            lineNumber: 170
                         }
                     },
                     _react3.default.createElement(
@@ -173,7 +192,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                         {
                             __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 137
+                                lineNumber: 171
                             }
                         },
                         message
@@ -190,7 +209,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                     {
                         __source: {
                             fileName: _jsxFileName,
-                            lineNumber: 144
+                            lineNumber: 178
                         }
                     },
                     _react3.default.createElement(
@@ -199,19 +218,22 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                             first: true,
                             __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 145
+                                lineNumber: 179
                             }
                         },
                         _react3.default.createElement(_reactNative.TextInput, {
+                            autoCapitalize: "none",
+                            autoCorrect: false,
                             placeholder: "user@mail.com",
                             style: styles.input,
                             value: this.state.email,
+                            keyboardType: "email-address",
                             onChangeText: function onChangeText(value) {
                                 return _this4.onChangeHandler('email', value);
                             },
                             __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 149
+                                lineNumber: 183
                             }
                         })
                     ),
@@ -221,7 +243,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                             last: true,
                             __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 158
+                                lineNumber: 195
                             }
                         },
                         _react3.default.createElement(_reactNative.TextInput, {
@@ -234,7 +256,7 @@ __d(function (global, _require, module, exports, _dependencyMap) {
                             },
                             __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 159
+                                lineNumber: 196
                             }
                         })
                     ),

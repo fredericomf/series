@@ -82,21 +82,54 @@ export default class LoginPage extends React.Component{
     tryLogin(){
 
         this.setState({isLoading : true, message: ''});
-        
         const { email, password } = this.state;
+
+        const loginUserSuccess = user => {
+            this.setState({
+                message: 'Sucesso!'
+            })
+        }
+
+        const loginUserFailed = error => {
+            this.setState({
+                message: this.getErrorMessageByCode(error.code)
+            })
+        }
 
         firebase
             .auth()
-            .signInWithEmailAndPassword( email, password )
-            .then( user => {
-                this.setState({ message: 'Sucesso!' });
-                console.log('usuário autenticado', user);
-            })
+            .signInWithEmailAndPassword( email.toLowerCase().trim(), password )
+            .then(loginUserSuccess)
             .catch(error => {
-                this.setState({ 
-                    message: this.getErrorMessageByCode( error.code )
-                });
-                // console.log('falha ao autenticar', error);
+                if ( error.code === 'auth/user-not-found' ) {
+                    Alert.alert(
+                        'Usuário não encontrado',
+                        'Deseja criar um cadastro com as informações inseridas?',
+                        [{ // A ordem importa, consultar documentação
+                            text: 'Não',
+                            onPress: () => {},
+                            style: 'cancel' // Só para IOS (seguindo padrão UI)
+                        },
+                        {
+                            text: 'Sim',
+                            onPress: () => {
+                                firebase
+                                    .auth()
+                                    .createUserWithEmailAndPassword(email.toLowerCase().trim(), password)
+                                    .then(loginUserSuccess)
+                                    .catch(loginUserFailed)
+                            }
+                        }],
+                        {cancelable: false}
+                        );
+                } else {
+                    /**
+                     * Quando não é o único retorno ou instrução o Destructuring não funciona.
+                     * Aí é necessário chamar a função no modo clássico
+                     */
+                    loginUserFailed(error)
+                    // console.log('falha ao autenticar', error);
+                }
             })
             .then( () => this.setState({ isLoading: false }) ); // Mesmo que dê o catch ele vai cair aqui depois
     }
@@ -148,9 +181,12 @@ export default class LoginPage extends React.Component{
                 first
                 >
                     <TextInput 
+                        autoCapitalize='none'
+                        autoCorrect={false}
                         placeholder="user@mail.com" 
                         style={ styles.input } 
                         value={ this.state.email } 
+                        keyboardType='email-address'
 
                         // É assim que são tratados os valores em campos input React
                         onChangeText={ value => this.onChangeHandler( 'email', value ) }
