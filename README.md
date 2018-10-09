@@ -30,6 +30,11 @@ npm install --save react-navigation
 https://yarnpkg.com/lang/en/docs/install/#debian-stable
 
 5- As vezes pode ocorrer um erro ao rodar o expo (npm/yarn start):
+
+ERRO: EACCES: permission denied, open 'nonono/expo/log'
+
+Rodar o comando abaixo pode resolver...
+
 sudo rm -r ~/.expo
 
 ## Implementações chaves
