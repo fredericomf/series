@@ -26,6 +26,12 @@ src/components
 
 npm install --save react-navigation
 
+4- [OPCIONAL] Instalar o yarn. Seguem instruções:
+https://yarnpkg.com/lang/en/docs/install/#debian-stable
+
+5- As vezes pode ocorrer um erro ao rodar o expo (npm/yarn start):
+sudo rm -r ~/.expo
+
 ## Implementações chaves
 
 #### Implementado o componente FormRow
