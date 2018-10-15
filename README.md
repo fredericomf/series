@@ -37,6 +37,12 @@ Rodar o comando abaixo pode resolver...
 
 sudo rm -r ~/.expo
 
+6- Instalar a extenção do Chrome "Redux DevTools":
+
+Depois de instalar a extenção é necessário instalar o pacote no projeto, com o seguinte comando:
+
+yarn add --dev remote-redux-devtools
+
 ## Implementações chaves
 
 #### Implementado o componente FormRow
