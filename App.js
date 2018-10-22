@@ -1,25 +1,8 @@
-import { createStackNavigator } from 'react-navigation';
-import LoginPage from './src/pages/LoginPage';
-
-export default createStackNavigator({ // É como se fossem ROTAS
-  'Login':{
-    screen: LoginPage,
-    navigationOptions: {
-      title: "Bem vindo"
-    }
-  }
-},{
-  navigationOptions:{
-    title: "Series!",
-    headerTintColor: '#FFF',
-    headerStyle:{
-      backgroundColor: '#6CA2F7',
-      borderBottomWidth: 1,
-      borderBottomColor: '#C5C5C5'
-    },
-    headerTitleStyle:{
-      color: '#FFF',
-      fontSize: 30
-    }
-  }
-});
+/**
+ * NOTA_ESTUDO:
+ * 
+ * Aqui eu estou simplesmente, importando e exportando a classe principal
+ * 
+ * O App.js é a raiz do projeto. Tem como mudar, mas o professor ainda não informou como...
+ */
+export default from './src/SeriesApp';
