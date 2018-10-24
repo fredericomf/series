@@ -1,5 +1,6 @@
 import { createStackNavigator } from 'react-navigation';
 import LoginPage from './pages/LoginPage';
+import SeriesPage from './pages/SeriesPage';
 
 export default createStackNavigator({ // É como se fossem ROTAS
   'Login':{
@@ -7,6 +8,9 @@ export default createStackNavigator({ // É como se fossem ROTAS
     navigationOptions: {
       title: "Bem vindo"
     }
+  },
+  'Main': {
+    screen: SeriesPage
   }
 },{
   navigationOptions:{

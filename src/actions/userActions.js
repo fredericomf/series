@@ -1,12 +1,12 @@
 import firebase from 'firebase';
 
-const USER_LOGIN_SUCCESS = 'USER_LOGIN_SUCCESS';
+export const USER_LOGIN_SUCCESS = 'USER_LOGIN_SUCCESS';
 const userLoginSuccess = user => ({
     type: USER_LOGIN_SUCCESS,
     user
 });
 
-const USER_LOGOUT = 'USER_LOGOUT';
+export const USER_LOGOUT = 'USER_LOGOUT';
 const userLogout = () => ({
     type: USER_LOGOUT
 });
@@ -30,7 +30,8 @@ const userLogout = () => ({
  */
 export const tryLogin = ({ email, password }) => dispatch => {
 
-    firebase
+    // Esse return retornará a Promisse para ser tratada externamente
+    return firebase
         .auth()
         .signInWithEmailAndPassword(email.toLowerCase().trim(), password)
         .then(user => {
