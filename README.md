@@ -43,6 +43,31 @@ Depois de instalar a extenção é necessário instalar o pacote no projeto, com
 
 yarn add --dev remote-redux-devtools
 
+## Snippets que eu criei para uso com o VSCode
+
+```
+"ReactNativeComponentBoilerplate":{
+		"scope": "javascript,typescript",
+		"prefix": "rn",
+		"body": [
+			"import React from 'react';",
+			"import { StyleSheet, View, Text } from 'react-native';",
+			"",
+			"const ${1:${TM_FILENAME_BASE}} = ({  }) => (",
+			"\t<View>",
+			"",
+			"\t</View>",
+			");",
+			"",
+			"const styles = StyleSheet.create({",
+			"",
+			"});",
+			"",
+			"export default ${1:${TM_FILENAME_BASE}}"
+		]
+	}
+```
+
 ## Implementações chaves
 
 #### Implementado o componente FormRow
