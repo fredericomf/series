@@ -38,6 +38,7 @@ export const tryLogin = ({ email, password }) => dispatch => {
         .then(user => {
             const action = userLoginSuccess(user);
             dispatch(action); // Tem que fazer o dispatch (redux-thunk)
+            return user;
         })
         .catch(error => {
             if (error.code === 'auth/user-not-found') {

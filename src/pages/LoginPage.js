@@ -87,14 +87,21 @@ class LoginPage extends React.Component {
         const { email, password } = this.state;
 
         this.props.tryLogin({ email, password })
-            .then(() => {
-                this.setState({ message: "Sucesso!" });
+            .then(user => {
 
-                /**
-                 * NOTA_ESTUDO:
-                 * O método replace do navigation vai apagar o histórico de navegação entre páginas
-                 */
-                this.props.navigation.replace('Main');
+                if(user){
+                    this.setState({ message: "Sucesso!" }); 
+                    /**
+                     * NOTA_ESTUDO:
+                     * O método replace do navigation vai apagar o histórico de navegação entre páginas
+                     */
+                    return this.props.navigation.replace('Main');
+                }
+
+                this.setState({
+                    isLoading: false,
+                    message: ''
+                });
             })
             .catch(error => {
                 this.setState({ isLoading: false, message: this.getErrorMessageByCode(error.code) });
