@@ -95,6 +95,9 @@ class LoginPage extends React.Component {
                  * O método replace do navigation vai apagar o histórico de navegação entre páginas
                  */
                 this.props.navigation.replace('Main');
+            })
+            .catch(error => {
+                this.setState({ isLoading: false, message: this.getErrorMessageByCode(error.code) });
             });
     }
 

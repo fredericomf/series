@@ -1,4 +1,5 @@
 import firebase from 'firebase';
+import {Alert} from 'react-native';
 
 export const USER_LOGIN_SUCCESS = 'USER_LOGIN_SUCCESS';
 const userLoginSuccess = user => ({
@@ -38,37 +39,51 @@ export const tryLogin = ({ email, password }) => dispatch => {
             const action = userLoginSuccess(user);
             dispatch(action); // Tem que fazer o dispatch (redux-thunk)
         })
-        // .catch(error => {
-        //     if (error.code === 'auth/user-not-found') {
-        //         Alert.alert(
-        //             'Usuário não encontrado',
-        //             'Deseja criar um cadastro com as informações inseridas?',
-        //             [{ // A ordem importa, consultar documentação
-        //                 text: 'Não',
-        //                 onPress: () => { },
-        //                 style: 'cancel' // Só para IOS (seguindo padrão UI)
-        //             },
-        //             {
-        //                 text: 'Sim',
-        //                 onPress: () => {
-        //                     firebase
-        //                         .auth()
-        //                         .createUserWithEmailAndPassword(email.toLowerCase().trim(), password)
-        //                         .then(loginUserSuccess)
-        //                         .catch(loginUserFailed)
-        //                 }
-        //             }],
-        //             { cancelable: false }
-        //         );
-        //     } else {
-        //         /**
-        //          * Quando não é o único retorno ou instrução o Destructuring não funciona.
-        //          * Aí é necessário chamar a função no modo clássico
-        //          */
-        //         loginUserFailed(error)
-        //         // console.log('falha ao autenticar', error);
-        //     }
-        // })
-        // .then(() => this.setState({ isLoading: false })); // Mesmo que dê o catch ele vai cair aqui depois
+        .catch(error => {
+            if (error.code === 'auth/user-not-found') {
 
+                /**
+                 * NOTA_ESTUDO:
+                 * Essa promise deve ser recebida com .then (resolve) e .catch (reject)
+                 */
+                return new Promise((resolve, reject) => {
+                    
+                    /**
+                     * NOTA_ESTUDO:
+                     * 
+                     * Cuidado ao importar o Alert, o sistema não dá erro se for importado errado. :(
+                     */
+                    Alert.alert(
+                        'Usuário não encontrado',
+                        'Deseja criar um cadastro com as informações inseridas?',
+                        [{ // A ordem importa, consultar documentação
+                            text: 'Não',
+                            onPress: () => resolve(),
+                            style: 'cancel' // Só para IOS (seguindo padrão UI)
+                        },
+                        {
+                            text: 'Sim',
+                            onPress: () => {
+                                firebase
+                                    .auth()
+                                    .createUserWithEmailAndPassword(email.toLowerCase().trim(), password)
+                                    .then(user => resolve(user)) // NOTA_ESTUDO: Poderia ser .then(resolve) (aqui ocorre a abstração do user)
+                                    .catch(reject)
+                            }
+                        }],
+                        { cancelable: false } // Evita que o usuário possa clicar fora do modal e sair
+                    );
+                });
+
+            } else {
+
+                return Promise.reject(error);
+                // /**
+                //  * Quando não é o único retorno ou instrução o Destructuring não funciona.
+                //  * Aí é necessário chamar a função no modo clássico
+                //  */
+                // loginUserFailed(error)
+                // console.log('falha ao autenticar', error);
+            }
+        })
 }
