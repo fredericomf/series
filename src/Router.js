@@ -3,15 +3,15 @@ import LoginPage from './pages/LoginPage';
 import SeriesPage from './pages/SeriesPage';
 
 export default createStackNavigator({ // É como se fossem ROTAS
+  'Main': {
+    screen: SeriesPage
+  },
   'Login':{
     screen: LoginPage,
     navigationOptions: {
       title: "Bem vindo"
     }
   },
-  'Main': {
-    screen: SeriesPage
-  }
 },{
   navigationOptions:{
     title: "Series!",
