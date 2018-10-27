@@ -1,8 +1,17 @@
 import React from 'react';
-import { StyleSheet, View, Text, Dimensions, Image } from 'react-native';
+import { 
+    StyleSheet, 
+    View, 
+    Text, 
+    Dimensions, 
+    Image,
+    TouchableOpacity
+ } from 'react-native';
 
-const SerieCard = ({ serie }) => (
-    <View style={styles.container}>
+const SerieCard = ({ serie, onNavigate }) => (
+    <TouchableOpacity 
+    onPress={() => onNavigate()}
+    style={styles.container}>
         <View style={styles.card}>
             <Image
                 source={{
@@ -15,7 +24,7 @@ const SerieCard = ({ serie }) => (
                 <Text style={styles.cardTitle}>{serie.title}</Text>
             </View>
         </View>
-    </View>
+    </TouchableOpacity>
 );
 
 const styles = StyleSheet.create({
