@@ -81,11 +81,7 @@ yarn add --dev remote-redux-devtools
 			"\t\t\t</View>",
 			"\t\t);",
 			"\t}",
-			"}",
-			"",
-			"const styles = StyleSheet.create({",
-			"",
-			"});"
+			"}"
 		]
 	}
 ```
