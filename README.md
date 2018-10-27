@@ -46,9 +46,9 @@ yarn add --dev remote-redux-devtools
 ## Snippets que eu criei para uso com o VSCode
 
 ```
-"ReactNativeComponentBoilerplate":{
+"ReactNativeFuncionalComponentBoilerplate":{
 		"scope": "javascript,typescript",
-		"prefix": "rn",
+		"prefix": "rnfc",
 		"body": [
 			"import React from 'react';",
 			"import { StyleSheet, View, Text } from 'react-native';",
@@ -64,6 +64,28 @@ yarn add --dev remote-redux-devtools
 			"});",
 			"",
 			"export default ${1:${TM_FILENAME_BASE}}"
+		]
+	},
+	"ReactNativeClassComponentBoilerplate":{
+		"scope": "javascript,typescript",
+		"prefix": "rncc",
+		"body": [
+			"import React from 'react';",
+			"import { StyleSheet, View, Text } from 'react-native';",
+			"",
+			"export default class ${1:${TM_FILENAME_BASE}} extends React.Component {",
+			"\trender() {",
+			"\t\treturn (",
+			"\t\t\t<View>",
+			"\t\t\t\t<Text>Esta é a ${1:${TM_FILENAME_BASE}}</Text>",
+			"\t\t\t</View>",
+			"\t\t);",
+			"\t}",
+			"}",
+			"",
+			"const styles = StyleSheet.create({",
+			"",
+			"});"
 		]
 	}
 ```
