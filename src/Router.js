@@ -5,6 +5,12 @@ import SerieDetailPage from './pages/SerieDetailPage';
 import SerieFormPage from './pages/SerieFormPage';
 
 export default createStackNavigator({ // É como se fossem ROTAS
+  'Login': {
+    screen: LoginPage,
+    navigationOptions: {
+      title: "Bem vindo"
+    }
+  },
   'Main': {
     screen: SeriesPage
   },
@@ -22,12 +28,6 @@ export default createStackNavigator({ // É como se fossem ROTAS
     screen: SerieFormPage,
     navigationOptions: {
       title: 'Nova série'
-    }
-  },
-  'Login': {
-    screen: LoginPage,
-    navigationOptions: {
-      title: "Bem vindo"
     }
   }
 }, {

@@ -6,11 +6,8 @@ import LongText from '../components/LongText';
 class SerieDetailPage extends React.Component {
     render() {
 
-        console.log(this.props.navigation);
-
         const { serie } = this.props.navigation.state.params;
-
-
+        
         return (
             <ScrollView>
                 <Image
