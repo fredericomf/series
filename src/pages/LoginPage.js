@@ -40,11 +40,6 @@ class LoginPage extends React.Component {
         };
         firebase.initializeApp(config);
 
-        this.setState({
-            email: "teste@mail.com",
-            password: "123123"
-        })
-
         // EXEMPLO DE USO:
         // Ao chamar o signInWithEmailAndPassword é retornada uma PROMISSE
         // firebase
