@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import { AirbnbRating, Rating } from 'react-native-ratings';
 import FormRow from '../components/FormRow';
-import { setField, saveSerie } from '../actions'
+import { setField, saveSerie, setWholeSerie, resetForm } from '../actions'
 import { connect } from 'react-redux';
 
 import mock from '../mock/series.json';
@@ -40,7 +40,20 @@ class SerieFormPage extends React.Component {
         //     await this.props.saveSerie(element);
         //     console.log('SALVEI UMA SERIE');
         // });
+    }
 
+    // Component Life Cycle
+    componentDidMount() {
+        // NOTA_ESTUDO:  Eu tenho acesso à essa action porque eu importei ela e implementei no 'mapDispatchToProps'
+
+        const { navigation, setWholeSerie, resetForm } = this.props;
+        const { params } = navigation.state;
+
+        if (params && params.serieToEdit) {
+            setWholeSerie(params.serieToEdit);
+        }else{
+            resetForm();
+        }
     }
 
     render() {
@@ -78,9 +91,11 @@ class SerieFormPage extends React.Component {
                             selectedValue={serieForm.gender}
                             style={styles.picker}
                             onValueChange={(value, index) => setField('gender', value)}>
-                            <Picker.Item label="Policial" value="police" />
-                            <Picker.Item label="Comédia" value="comedy" />
-                            <Picker.Item label="Terror" value="horror" />
+                            <Picker.Item label="Policial" value="Policial" />
+                            <Picker.Item label="Comédia" value="Comédia" />
+                            <Picker.Item label="Terror" value="Terror" />
+                            <Picker.Item label="Drama" value="Drama" />
+                            <Picker.Item label="Ficção Científica" value="Ficção Científica" />
                         </Picker>
                     </FormRow>
 
@@ -127,12 +142,12 @@ class SerieFormPage extends React.Component {
                                 onPress={async () => {
 
                                     this.setState({ isLoading: true });
-                                    try{
+                                    try {
                                         await saveSerie(serieForm);
                                         navigation.goBack();
-                                    }catch(error){
+                                    } catch (error) {
                                         Alert.alert('Erro', error.message);
-                                    }finally{
+                                    } finally {
                                         this.setState({ isLoading: false });
                                     }
                                 }}
@@ -200,7 +215,9 @@ function mapStateToProps(state) {
  */
 const mapDispatchToProps = {
     setField,
-    saveSerie
+    saveSerie,
+    setWholeSerie,
+    resetForm
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SerieFormPage);

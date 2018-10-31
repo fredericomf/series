@@ -1,5 +1,11 @@
 import firebase from 'firebase';
 
+export const SET_WHOLE_SERIE = 'SET_WHOLE_SERIE';
+export const setWholeSerie = serie => ({
+    type: SET_WHOLE_SERIE,
+    serie
+});
+
 export const SET_FIELD = 'SET_FIELD';
 export const setField = (field, value) => {
     return {
@@ -8,6 +14,11 @@ export const setField = (field, value) => {
         value
     }
 }
+
+export const RESET_FORM = 'RESET_FORM';
+export const resetForm = () => ({
+    type: RESET_FORM
+});
 
 export const SERIE_SAVED_SUCCESS = 'SERIE_SAVED_SUCCESS';
 
@@ -33,11 +44,16 @@ export const saveSerie = (serie) => {
      * Isso é o mesmo que usar o then() da Promisse retornada. Lambrando que só da pra usar await dentro de functions async.
      */
     return async dispatch => {
-        const db = firebase
-            .database()
-            .ref(`/users/${currentUser.uid}/series`); // NOTA_ESTUDO: Não existem tabelas no Firebase, são PATHs
 
-        await db.push(serie);
+        const db = firebase.database();
+        
+        if(serie.id){
+            // NOTA_ESTUDO: Não existem tabelas no Firebase, são PATHs
+            await db.ref(`/users/${currentUser.uid}/series/${serie.id}`).set(serie);
+        }else{
+            await db.ref(`/users/${currentUser.uid}/series`).push(serie);
+        }
+        
         dispatch(serieSavedSuccess());
     }
 }

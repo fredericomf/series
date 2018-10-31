@@ -1,25 +1,28 @@
 import React from 'react';
-import { 
-    StyleSheet, 
-    View, 
-    Text, 
-    Dimensions, 
+import {
+    StyleSheet,
+    View,
+    Text,
+    Dimensions,
     Image,
     TouchableOpacity
- } from 'react-native';
+} from 'react-native';
 
 const SerieCard = ({ serie, onNavigate }) => (
-    <TouchableOpacity 
-    onPress={() => onNavigate()}
-    style={styles.container}>
+    <TouchableOpacity
+        onPress={() => onNavigate()}
+        style={styles.container}>
         <View style={styles.card}>
-            <Image
+            {
+                serie.img 
+                ? <Image
                 source={{
                     uri: serie.img
                 }}
                 aspectRatio={1}
                 resizeMode="cover"
             />
+            : null }
             <View style={styles.cardTitleWrapper}>
                 <Text style={styles.cardTitle}>{serie.title}</Text>
             </View>
@@ -30,7 +33,7 @@ const SerieCard = ({ serie, onNavigate }) => (
 const styles = StyleSheet.create({
     container: {
         height: Dimensions.get('window').width / 2,
-        
+
         // Solução 1
         padding: 3,
         width: '50%'

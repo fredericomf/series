@@ -24,10 +24,19 @@ export default createStackNavigator({ // É como se fossem ROTAS
       }
     }
   },
-  'SerieForm':{
+  'SerieForm': {
     screen: SerieFormPage,
-    navigationOptions: {
-      title: 'Nova série'
+    navigationOptions: ({ navigation }) => {
+
+      if (navigation.state.params && navigation.state.params.serieToEdit) {
+        return {
+          title: navigation.state.params.serieToEdit.title
+        }
+      }
+
+      return {
+        title: 'Nova série'
+      }
     }
   }
 }, {

@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "series",
+    "name": "Series Testes UDEMY",
     "description": "This is an experimental under construction app. I'm learning React Native yet...",
-    "slug": "series",
+    "slug": "series-testes-udemy",
     "privacy": "public",
     "sdkVersion": "30.0.0",
     "platforms": [
