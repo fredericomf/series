@@ -39,9 +39,27 @@ sudo rm -r ~/.expo
 
 6- Instalar a extenção do Chrome "Redux DevTools":
 
+Instalar o React Redux:
+
+yarn add react-redux
+
+7- Instalar a extenção do Chrome "Redux DevTools":
+
 Depois de instalar a extenção é necessário instalar o pacote no projeto, com o seguinte comando:
 
 yarn add --dev remote-redux-devtools
+
+8- Instalar o React Thunk:
+
+É necessário instalar o addon React Thunk para manipulação de chamadas assíncronas com o Redux
+
+yarn add react-thunk
+
+9- Instalar o Firebase:
+
+Para este curso, é necessário instalador o Firebase (nosso backend):
+
+yarn add firebase
 
 ## Snippets que eu criei para uso com o VSCode
 
