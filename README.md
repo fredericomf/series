@@ -10,6 +10,10 @@
 
 #npm install -g create-react-native-app
 
+#npm install -g react-native-cli
+
+'Pode-se utilizar o yarn global add'
+
 ## Configurando o projeto
 
 1- Criar a estrutura:
